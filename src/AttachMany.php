@@ -31,7 +31,14 @@ class AttachMany extends Field
 
     public function __construct($name, $attribute = null, $resource = null)
     {
-        parent::__construct($name, $attribute);
+        if(is_array($name)) {
+            $label = $name['label'];
+            $name = $name['nova'];
+            parent::__construct($name, $attribute);
+            $this->name = $label;
+        } else {
+            parent::__construct($name, $attribute);
+        }
 
         $resource = $resource ?? ResourceRelationshipGuesser::guessResource($name);
 
